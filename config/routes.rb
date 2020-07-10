@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+
+  post 'signup', to: 'user#create'
+  post 'login', to: 'user#login'
+
   get 'service_task/show'
   get 'service_task/create'
   get 'service_task/update'
