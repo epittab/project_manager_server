@@ -1,0 +1,2 @@
+class TimeTask < ApplicationRecord
+end

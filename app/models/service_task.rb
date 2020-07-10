@@ -1,0 +1,2 @@
+class ServiceTask < ApplicationRecord
+end

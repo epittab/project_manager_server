@@ -1,0 +1,2 @@
+class MaterialTask < ApplicationRecord
+end

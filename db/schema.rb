@@ -10,9 +10,88 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 2020_07_10_034700) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "blocks", force: :cascade do |t|
+    t.integer "project_id"
+    t.string "block_name"
+    t.text "block_description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "material_tasks", force: :cascade do |t|
+    t.integer "task_id"
+    t.float "material_cost"
+    t.string "material_name"
+    t.text "material_description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "projects", force: :cascade do |t|
+    t.string "project_name"
+    t.text "project_description"
+    t.date "est_start_date"
+    t.date "est_end_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.string "role_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "service_tasks", force: :cascade do |t|
+    t.integer "task_id"
+    t.float "service_cost"
+    t.string "service_name"
+    t.text "service_description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "tasks", force: :cascade do |t|
+    t.integer "block_id"
+    t.string "task_name"
+    t.text "task_description"
+    t.date "est_start_date"
+    t.date "est_end_date"
+    t.date "act_start_date"
+    t.date "act_end_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "time_tasks", force: :cascade do |t|
+    t.integer "task_id"
+    t.integer "user_id"
+    t.string "time_task_name"
+    t.text "time_task_description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "user_projects", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "project_id"
+    t.integer "role_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.string "password_digest"
+    t.string "username"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
 end
