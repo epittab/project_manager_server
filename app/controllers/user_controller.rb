@@ -1,4 +1,5 @@
 class UserController < ApplicationController
+
   def create
     
     user = User.new(first_name: params[:first_name], last_name: params[:last_name],  username: params[:username], password: params[:password])
@@ -13,7 +14,6 @@ class UserController < ApplicationController
   def login
 
     user = User.find_by(username: params[:username]).try(:authenticate, params[:password])
-    
     if (user)
       render json: {user_id: user.id, first_name: user.first_name, token: {}}, status: :ok
     else 
@@ -21,8 +21,5 @@ class UserController < ApplicationController
     end
 
   end
-
-
-
 
 end
