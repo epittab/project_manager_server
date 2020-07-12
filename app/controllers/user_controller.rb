@@ -15,7 +15,8 @@ class UserController < ApplicationController
 
     user = User.find_by(username: params[:username]).try(:authenticate, params[:password])
     if (user)
-      render json: {user_id: user.id, first_name: user.first_name, token: {}}, status: :ok
+      token = ApplicationController.encode(user)
+      render json: {first_name: user.first_name, token: token}, status: :ok
     else 
       render json: {error: true, message: 'Invalid Username and/or Password'}, status: :unprocessable_entity 
     end
