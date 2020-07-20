@@ -18,6 +18,18 @@ class TaskController < ApplicationController
   def update
   end
 
+  def budget
+    task = Task.find(params[:id])
+    task.budget_amount = params[:budget_amount].to_f
+    if task.save
+      render json: task, status: :ok
+    else
+      render json: {error: true, message: "Budgeting unsuccessful"}, status: :unprocessable_entity
+    end
+
+  end
+
+
   def destroy
   end
 

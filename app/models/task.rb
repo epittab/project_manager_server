@@ -1,6 +1,6 @@
 class Task < ApplicationRecord
     belongs_to :block
-    has_many :material_tasks
-    has_many :service_tasks
-    has_many :time_tasks
+    belongs_to :status
+    has_many :serv_mat_costs
+    has_many :labor_costs
 end

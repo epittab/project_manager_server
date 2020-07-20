@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_10_034700) do
+ActiveRecord::Schema.define(version: 2020_07_20_222041) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,13 +21,14 @@ ActiveRecord::Schema.define(version: 2020_07_10_034700) do
     t.text "block_description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "status_id"
   end
 
-  create_table "material_tasks", force: :cascade do |t|
+  create_table "labor_costs", force: :cascade do |t|
     t.integer "task_id"
-    t.float "material_cost"
-    t.string "material_name"
-    t.text "material_description"
+    t.integer "user_id"
+    t.string "time_task_name"
+    t.text "time_task_description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -47,11 +48,17 @@ ActiveRecord::Schema.define(version: 2020_07_10_034700) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "service_tasks", force: :cascade do |t|
+  create_table "serv_mat_costs", force: :cascade do |t|
     t.integer "task_id"
-    t.float "service_cost"
-    t.string "service_name"
-    t.text "service_description"
+    t.float "serv_mat_cost"
+    t.string "serv_mat_name"
+    t.text "serv_mat_description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "statuses", force: :cascade do |t|
+    t.string "status_name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -66,15 +73,8 @@ ActiveRecord::Schema.define(version: 2020_07_10_034700) do
     t.date "act_end_date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "time_tasks", force: :cascade do |t|
-    t.integer "task_id"
-    t.integer "user_id"
-    t.string "time_task_name"
-    t.text "time_task_description"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.float "budget_amount"
+    t.integer "status_id"
   end
 
   create_table "user_projects", force: :cascade do |t|
