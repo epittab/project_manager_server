@@ -13,7 +13,9 @@ Rails.application.routes.draw do
   delete 'blocks/:id', to: 'block#destroy'
 
   post 'tasks', to: 'task#create'
-  
+  get 'tasks/:id', to: 'task#show'
+
+  post 'costs', to: 'cost#create'
 
   post 'service_task/create'
   post 'material_task/create'

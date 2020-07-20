@@ -22,6 +22,13 @@ class TaskController < ApplicationController
   end
 
   def show
+    task = Task.find(params[:id])
+    if task
+      render json: task, status: :ok
+    else
+      render json: {error: true, message: "Task not found."}, status: 404
+    end
+
   end
   
   private
