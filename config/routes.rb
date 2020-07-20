@@ -9,7 +9,9 @@ Rails.application.routes.draw do
 
   post 'blocks', to: 'block#create'
   get 'blocks', to: 'block#index'
-  
+  get 'blocks/:id', to: 'block#show'
+  delete 'blocks/:id', to: 'block#destroy'
+
   post 'tasks', to: 'task#create'
   
 

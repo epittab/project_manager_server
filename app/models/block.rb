@@ -1,6 +1,6 @@
 class Block < ApplicationRecord
     belongs_to :project
-    has_many :tasks
+    has_many :tasks, dependent: :destroy
 
     def est_start_date
         task_date = self.tasks.map do |task| task.est_start_date end.min

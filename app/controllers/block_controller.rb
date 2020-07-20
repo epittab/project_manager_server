@@ -19,9 +19,26 @@ class BlockController < ApplicationController
   end
 
   def destroy
+    block = Block.destroy(params[:id])
+    if block
+      render json: block, status: :ok
+    else
+      render json: {error: true, message: 'Resource delete was unsuccessful'}, status: :bad_request
+    end
   end
 
   def show
+    block = Block.find(params[:id])
+
+    tasks_array = block.tasks
+    # blockArray = project.blocks.map do |block|     
+    #   tasks = block.tasks
+    #   (tasks.length > 0) ? b_e_date = block.est_end_date : b_e_date = nil
+    #   (tasks.length > 0) ? b_s_date = block.est_start_date : b_s_date = nil
+    #   { :block => block, :b_e_date => b_e_date, :b_s_date => b_s_date, :tasks => tasks }
+    # end
+
+    render json: {block: block, tasks: tasks_array}, status: :ok
   end
   
   private 
