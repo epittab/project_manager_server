@@ -5,8 +5,8 @@ class ApplicationController < ActionController::API
         header = request.headers['Authorization']
         header = header.split(' ').last if header
         begin
-            @decoded = ApplicationController.decode(header)
-            @current_user = User.find(@decoded[:sub])
+            @decoded = ApplicationController.decode(header)[0]
+            @current_user = User.find(@decoded['sub'])
         rescue ActiveRecord::RecordNotFound => e
             render json: {errors: e.message}, status: :unauthorized
         rescue JWT::DecodeError => e
@@ -32,7 +32,7 @@ class ApplicationController < ActionController::API
 
     def self.decode(token)
 
-        decoded_token = JWT.decode token, ENV['HMAC_SECRET'], true, { algorithm: 'HS256' } 
+        decoded_token = JWT.decode token, ENV['HMAC_SECRET'], true, { algorithm: 'HS256' }
 
     end
 

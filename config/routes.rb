@@ -1,32 +1,39 @@
 Rails.application.routes.draw do
-
+  
   post 'signup', to: 'user#create'
   post 'login', to: 'user#login'
+  
+  post 'projects', to: 'project#create'
+  get 'projects', to: 'project#index'
+  get 'projects/:id', to: 'project#show'
 
+  post 'blocks', to: 'block#create'
+  get 'blocks', to: 'block#index'
+  
+  post 'tasks', to: 'task#create'
+  
+
+  post 'service_task/create'
+  post 'material_task/create'
+  post 'time_task/create'
+  
   get 'service_task/show'
-  get 'service_task/create'
   get 'service_task/update'
   get 'service_task/destroy'
   get 'material_task/show'
-  get 'material_task/create'
   get 'material_task/update'
   get 'material_task/destroy'
   get 'time_task/show'
-  get 'time_task/create'
   get 'time_task/update'
   get 'time_task/destroy'
-  get 'task/create'
   get 'task/update'
   get 'task/destroy'
   get 'task/show'
-  get 'block/create'
   get 'block/update'
   get 'block/destroy'
   get 'block/show'
-  get 'project/create'
   get 'project/update'
   get 'project/destroy'
   get 'project/show'
-  get 'user/create'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
