@@ -9,19 +9,19 @@ class Project < ApplicationRecord
         self.tasks.map do |task| task.budget_amount end.reduce(:+)
     end
 
-    def est_start_date
+    def calc_est_start
         task_date = self.tasks.map do |task| task.est_start_date end.min
     end
     
-    def est_end_date
+    def calc_est_end
         task_date = self.tasks.map do |task| task.est_end_date end.max
     end
     
-    def act_start_date
+    def calc_act_start
         task_date = self.tasks.map do |task| task.act_start_date end.min
     end
     
-    def act_end_date
+    def calc_act_end
         task_date = self.tasks.map do |task| task.act_end_date end.max
     end
 

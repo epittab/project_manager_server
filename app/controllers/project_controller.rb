@@ -26,6 +26,13 @@ class ProjectController < ApplicationController
   def destroy
   end
 
+  def budget
+    project = Project.find(params[:id])
+    total = project.calculate_budget
+    budget_per_task = project.tasks.map do |task| {task: task.task_name, budget: task.budget_amount} end
+    render json: {total_budget: total, budget_per_task: budget_per_task}, status: :ok
+  end
+
   def show
     project = Project.find(params[:id])
 

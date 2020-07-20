@@ -2,7 +2,7 @@ class BlockController < ApplicationController
   before_action :authorize_request
 
   def create
-    new_block = Block.create(project_id: params[:project_id], block_name: params[:block_name], block_description: params[:block_description])
+    new_block = Block.create(project_id: params[:project_id], block_name: params[:block_name], block_description: params[:block_description], status_id: 2)
     if (new_block)
       render json: new_block, status: :ok
     else
