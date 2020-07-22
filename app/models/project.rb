@@ -6,7 +6,12 @@ class Project < ApplicationRecord
 
     def calculate_budget
         total_allocated = 0
-        self.tasks.map do |task| task.budget_amount end.reduce(:+)
+        self.tasks.map do |task| 
+            if task.budget_amount
+                total_allocated += task.budget_amount
+            end
+        end
+        total_allocated
     end
 
     def calc_est_start
