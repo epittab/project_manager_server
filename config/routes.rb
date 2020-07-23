@@ -15,7 +15,7 @@ Rails.application.routes.draw do
 
   post 'tasks', to: 'task#create'
   get 'tasks/:id', to: 'task#show'
-  patch 'tasks/:id', to: 'task#budget'
+  patch 'tasks/:id', to: 'task#update'
   
 
   post 'costs', to: 'cost#create'

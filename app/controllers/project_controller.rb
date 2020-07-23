@@ -43,7 +43,10 @@ class ProjectController < ApplicationController
       { :block => block, :b_e_date => b_e_date, :b_s_date => b_s_date, :tasks => tasks }
     end
 
-    render json: {project: project, blocks: blockArray}, status: :ok
+    project_days = project.display_length
+    project_start = project.display_start
+
+    render json: {project: project, blocks: blockArray, days: project_days, display_start: project_start}, status: :ok
   end
 
   private

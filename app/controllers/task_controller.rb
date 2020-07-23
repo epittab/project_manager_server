@@ -16,10 +16,17 @@ class TaskController < ApplicationController
   end
 
   def update
-    task = Task.find(params[:id])
-    if task
-      task.update(:params[:field] => params[:value])
-      render json: task, status: :ok
+    edit_task = Task.find(params[:id])
+    if edit_task
+      
+      if params[:payload] == 3 && params[:field] == 'status_id'
+        edit_task.start_task
+        edit_task.update(params[:field] => params[:payload].to_i)
+      elsif params[:payload] == 5 && params[:field] == 'status_id'
+        edit_task.end_task
+        edit_task.update(params[:field] => params[:payload].to_i)
+      end
+      render json: edit_task, status: :ok
     else
       render json: {error: true, message: "Task update unsuccessful"}, status: :bad_request
     end
