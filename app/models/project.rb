@@ -78,13 +78,14 @@ class Project < ApplicationRecord
     end
     
     def calc_est_start
-        task_date = self.tasks.map do |task| task.est_start_date end.min
-        return task_date if task_date < self.est_start_date
-        return self.est_start_date if task_date >= self.est_start_date
+        task_date = self.tasks.map do |task| task.est_start_date end.min || self.est_start_date
+       
+            return task_date if task_date < self.est_start_date
+            return self.est_start_date if task_date >= self.est_start_date
     end
     
     def calc_est_end
-        task_date = self.tasks.map do |task| task.est_end_date end.max
+        task_date = self.tasks.map do |task| task.est_end_date end.max || self.est_end_date
         return task_date if task_date > self.est_end_date
         return self.est_end_date if task_date <= self.est_end_date
     end
