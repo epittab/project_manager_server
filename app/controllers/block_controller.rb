@@ -4,7 +4,7 @@ class BlockController < ApplicationController
   def create
     new_block = Block.create(project_id: params[:project_id], block_name: params[:block_name], block_description: params[:block_description], status_id: 2)
     if (new_block)
-      render json: new_block, status: :ok
+      render json: {block: new_block, tasks: []}, status: :ok
     else
       render json: {error: true, message: 'Block not created.'}, status: :unprocessable_entity
     end
