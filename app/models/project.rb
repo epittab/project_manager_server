@@ -14,6 +14,104 @@ class Project < ApplicationRecord
         total_allocated
     end
 
+    def isOverBudget?
+        budget = self.calculate_budget
+        cost = self.calculate_cost[:total_cost]
+        if cost > budget
+            return [true, info: {budget: budget, cost: cost, amount: (budget - cost)}]
+        elsif budget > cost
+            return [false,  info: {budget: budget, cost: cost, amount: (budget - cost)}]
+        else 
+            return [false, info: {budget: budget, cost: cost, amount: (0.00)}]
+        end
+    end
+
+    def calculate_cost
+        project_cost = {
+            total_cost: 0,
+            labor_cost: 0,
+            serv_cost: 0,
+            mat_cost: 0
+        }
+
+        serv_mat_costs  = self.tasks.map do |t| t.serv_mat_costs  end.flatten
+        serv_costs = serv_mat_costs.find_all do |t| t.isService end
+        mat_costs = serv_mat_costs.find_all do |t| !t.isService end
+        
+        labor_costs = self.tasks.map do |t| t.labor_costs end.flatten
+            
+            if labor_costs.length > 0
+                costs = labor_costs.map do |c| c.labor_cost end.reduce(:+)
+                project_cost[:labor_cost] = costs
+            end
+            if serv_costs.length > 0
+                costs = serv_costs.map do |c| c.serv_mat_cost end.reduce(:+)
+                project_cost[:serv_cost] = costs
+            end
+            if mat_costs.length > 0
+                costs = mat_costs.map do |c| c.serv_mat_cost end.reduce(:+)
+                project_cost[:mat_cost] = costs
+            end
+
+        project_cost[:total_cost] = project_cost[:labor_cost] + project_cost[:serv_cost] + project_cost[:mat_cost]
+
+        return project_cost
+
+    end
+
+
+    def team_count
+        self.users.count
+    end
+
+    def task_dist_by_status
+        task_dist = {
+            :Created => 0,
+            :Completed => 0,
+            :Pending => 0,
+            :Delayed => 0,
+            :"In Progress" => 0
+
+        }
+        task_array = self.tasks.map do |task| task.status end.each do |t|
+            name = t.status_name.to_sym
+            task_dist[name] += 1
+        end
+        return task_dist
+    end
+
+    def percent_task(status_name)
+        task_array = self.tasks
+        completed_tasks = task_array.map do |task| task.status end.find_all do |t| t.status_name == status_name end.count
+        total_tasks = task_array.count
+        return completed_tasks/total_tasks.to_f
+    end
+
+    def percent_complete
+        self.percent_task("Completed")
+    end
+
+    def percent_pending
+        self.percent_task("Pending")
+    end
+
+    def percent_delayed
+        self.percent_task("Delayed")
+    end
+
+    def percent_in_progress
+        self.percent_task("In Progress")
+    end
+
+    def task_count
+        self.tasks.count
+    end
+
+    def block_count
+        self.blocks.count
+    end
+
+
     def display_start
         current_date = Date.today
         est_date = self.calc_est_start || self.est_start_date
@@ -30,6 +128,19 @@ class Project < ApplicationRecord
 
         # return Date
     end
+
+    def days_remaining
+        if !self.is_completed?
+            e_end = self.calc_est_end
+            a_end = self.calc_act_end || e_end
+            current_date = Date.today
+            latest_date = e_end >= a_end ? e_end : a_end
+            return (latest_date - current_date).to_i
+        else 
+            return false
+        end 
+    end
+
 
     def display_length
         e_start = self.calc_est_start
