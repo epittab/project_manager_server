@@ -35,7 +35,7 @@ class ProjectController < ApplicationController
 
   def show
     project = Project.find(params[:id])
-
+    project.refresh
     blockArray = project.blocks.map do |block|     
       tasks = block.tasks
       (tasks.length > 0) ? b_e_date = block.est_end_date : b_e_date = nil

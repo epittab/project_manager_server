@@ -4,6 +4,13 @@ class Project < ApplicationRecord
     has_many :tasks, through: :blocks
     has_many :users, through: :user_projects
 
+
+    def refresh
+        self.tasks.each do |t| t.refresh_status end
+        self.blocks.each do |b| b.refresh_status end
+    end
+
+
     def calculate_budget
         total_allocated = 0
         self.tasks.map do |task| 
