@@ -24,6 +24,8 @@ Rails.application.routes.draw do
   post 'service_task/create'
   post 'material_task/create'
   post 'time_task/create'
+
+  post 'islogged', to: 'auth#check_user_status'
   
   get 'service_task/show'
   get 'service_task/update'
