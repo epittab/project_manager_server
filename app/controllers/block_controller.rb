@@ -29,7 +29,7 @@ class BlockController < ApplicationController
 
   def show
     block = Block.find(params[:id])
-
+    block.refresh_status
     tasks_array = block.tasks
     # blockArray = project.blocks.map do |block|     
     #   tasks = block.tasks
@@ -37,8 +37,8 @@ class BlockController < ApplicationController
     #   (tasks.length > 0) ? b_s_date = block.est_start_date : b_s_date = nil
     #   { :block => block, :b_e_date => b_e_date, :b_s_date => b_s_date, :tasks => tasks }
     # end
-
-    render json: {block: block, tasks: tasks_array}, status: :ok
+    block_status = block.status.status_name
+    render json: {block: block, block_status: block_status, tasks: tasks_array}, status: :ok
   end
   
   private 
