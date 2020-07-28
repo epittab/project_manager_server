@@ -49,6 +49,16 @@ class ProjectController < ApplicationController
     render json: {project: project, blocks: blockArray, days: project_days, display_start: project_start}, status: :ok
   end
 
+  def performance
+    project = Project.find(params[:id])
+    if project
+      kpis = project.indicators
+      return json: kpis, status: :ok
+    else
+      return json: {error: true, message: "Could not generate indicators"}, status: 400
+    end
+  end
+
   private
   def project_params(*args)
     params.require(:project).permit(*args)

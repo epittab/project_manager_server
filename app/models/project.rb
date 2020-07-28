@@ -10,6 +10,23 @@ class Project < ApplicationRecord
         self.blocks.each do |b| b.refresh_status end
     end
 
+    def indicators
+        return {
+            percent_complete: self.percent_complete,
+            task_count: self.task_count,
+            block_count: self.block_count,
+            duration: self.display_length,
+            days_remaining: self.days_remaining,
+            days_worked: self.working_days,
+            total_budget: self.calculate_budget,
+            isOverBudget: self.isOverBudget?,
+            total_cost: self.calculate_cost,
+            team_members: self.team_count,
+            task_dist: self.task_dist_by_status,
+          }
+
+    end
+
 
     def calculate_budget
         total_allocated = 0

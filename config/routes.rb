@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get 'projects', to: 'project#index'
   get 'projects/:id/budget', to: 'project#budget'
   get 'projects/:id', to: 'project#show'
+  get 'projects/:id/performance', to: 'project#performance'
 
   post 'blocks', to: 'block#create'
   get 'blocks', to: 'block#index'
