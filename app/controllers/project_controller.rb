@@ -53,9 +53,9 @@ class ProjectController < ApplicationController
     project = Project.find(params[:id])
     if project
       kpis = project.indicators
-      return json: kpis, status: :ok
+      render json: kpis, status: :ok
     else
-      return json: {error: true, message: "Could not generate indicators"}, status: 400
+      render json: {error: true, message: "Could not generate indicators"}, status: 400
     end
   end
 
