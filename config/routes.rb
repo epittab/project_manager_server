@@ -17,8 +17,8 @@ Rails.application.routes.draw do
   get 'tasks/:id', to: 'task#show'
   patch 'tasks/:id', to: 'task#update'
   patch 'tasks/:id/budget', to: 'task#budget'
+  delete 'tasks/:id', to: 'task#destroy'
   
-
   post 'costs', to: 'cost#create'
 
   post 'service_task/create'
