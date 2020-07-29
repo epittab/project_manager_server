@@ -58,6 +58,18 @@ class ProjectController < ApplicationController
       render json: {error: true, message: "Could not generate indicators"}, status: 400
     end
   end
+  
+  def allperformance
+    user_project_array = @current_user.projects.map do |up|
+      ind_list = up.indicators
+      {id: up.id, indicators: ind_list}
+    end
+    if user_project_array
+      render json: user_project_array, status: :ok
+    else
+      render json: {error: true, message: "Could not generate indicators"}, status: 400
+    end
+  end
 
   private
   def project_params(*args)
