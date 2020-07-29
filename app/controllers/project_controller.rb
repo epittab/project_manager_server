@@ -17,7 +17,8 @@ class ProjectController < ApplicationController
   end
 
   def index
-    render json: @current_user.projects, status: :ok
+    user_project_array = @current_user.projects.map do |up| {project: up, isComplete: up.is_completed?} end
+    render json: user_project_array, status: :ok
   end
 
   def update
@@ -43,10 +44,12 @@ class ProjectController < ApplicationController
       { :block => block, :b_e_date => b_e_date, :b_s_date => b_s_date, :tasks => tasks }
     end
 
+    isComplete = project.is_completed?
+
     project_days = project.display_length
     project_start = project.display_start
 
-    render json: {project: project, blocks: blockArray, days: project_days, display_start: project_start}, status: :ok
+    render json: {project: project, isComplete: isComplete, blocks: blockArray, days: project_days, display_start: project_start}, status: :ok
   end
 
   def performance
