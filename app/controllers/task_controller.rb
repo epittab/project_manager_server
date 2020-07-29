@@ -55,7 +55,10 @@ class TaskController < ApplicationController
     task = Task.find(params[:id])
     if task
       status_name = task.status.status_name
-      costs = {labor_costs: task.labor_costs, serv_mat_costs: task.serv_mat_costs}
+
+      modified_task_array = task.labor_costs.map do |lc| {id: lc.id, task_id: lc.task_id, user_id: lc.user_id, labor_name: lc.time_task_name, labor_description: lc.time_task_description, user_hours: lc.user_hours, calculated_cost: lc.user_labor_cost } end
+
+      costs = {labor_costs: modified_task_array, serv_mat_costs: task.serv_mat_costs}
       render json: {task: task, costs: costs, task_status: status_name}, status: :ok
     else
       render json: {error: true, message: "Task not found."}, status: 404

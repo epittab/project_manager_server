@@ -65,7 +65,7 @@ class Project < ApplicationRecord
         labor_costs = self.tasks.map do |t| t.labor_costs end.flatten
             
             if labor_costs.length > 0
-                costs = labor_costs.map do |c| c.labor_cost end.reduce(:+)
+                costs = labor_costs.map do |c| c.user_labor_cost end.reduce(:+)
                 project_cost[:labor_cost] = costs
             end
             if serv_costs.length > 0

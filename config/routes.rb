@@ -29,6 +29,9 @@ Rails.application.routes.draw do
 
   post 'islogged', to: 'auth#check_user_status'
   
+  get 'account', to: 'user#show'
+  patch 'account/cost', to: 'user#updatecost'
+
   get 'service_task/show'
   get 'service_task/update'
   get 'service_task/destroy'

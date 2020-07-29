@@ -30,7 +30,9 @@ class ProjectController < ApplicationController
   def budget
     project = Project.find(params[:id])
     total = project.calculate_budget
-    budget_per_task = project.tasks.map do |task| {task: task.task_name, budget: task.budget_amount, labor_costs: task.labor_costs, serv_mat_costs: task.serv_mat_costs} end
+    budget_per_task = project.tasks.map do |task| 
+      modified_lc_array = task.labor_costs.map do |lc| {id: lc.id, task_id: lc.task_id, user_id: lc.user_id, labor_name: lc.time_task_name, labor_description: lc.time_task_description, user_hours: lc.user_hours, calculated_cost: lc.user_labor_cost } end
+      {task: task.task_name, budget: task.budget_amount, labor_costs: modified_lc_array, serv_mat_costs: task.serv_mat_costs} end
     render json: {total_budget: total, budget_per_task: budget_per_task}, status: :ok
   end
 
