@@ -67,7 +67,7 @@ class ProjectController < ApplicationController
   def allperformance
     user_project_array = @current_user.projects.map do |up|
       ind_list = up.indicators
-      {id: up.id, indicators: ind_list}
+      {id: up.id, proj_name: up.project_name, indicators: ind_list}
     end
     if user_project_array
       render json: user_project_array, status: :ok
