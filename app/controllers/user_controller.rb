@@ -30,6 +30,10 @@ class UserController < ApplicationController
     render json: @current_user, status: :ok
   end
 
+  def generalstats
+    render json: @current_user.indicators, status: :ok
+  end
+
   def updatecost
     
     if @current_user.update(user_cost: params[:user_cost])

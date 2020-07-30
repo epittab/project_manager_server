@@ -10,13 +10,7 @@ class Project < ApplicationRecord
         self.blocks.each do |b| b.refresh_status end
     end
 
-    def generalIndicators
-        return {
-            project_count: 1
-        }
-    end
-
-
+  
     def indicators
         return {
             percent_complete: self.percent_complete,
@@ -31,7 +25,6 @@ class Project < ApplicationRecord
             team_members: self.team_count,
             task_dist: self.task_dist_by_status,
           }
-
     end
 
 

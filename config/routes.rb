@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   post 'contributor', to: 'project#addcontrib'
   post 'invite', to: 'project#getcontribs'
 
+  get 'dashboard', to: 'user#generalstats'
 
   post 'service_task/create'
   post 'material_task/create'
