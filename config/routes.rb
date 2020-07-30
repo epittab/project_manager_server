@@ -23,6 +23,10 @@ Rails.application.routes.draw do
   
   post 'costs', to: 'cost#create'
 
+  post 'contributor', to: 'project#addcontrib'
+  post 'invite', to: 'project#getcontribs'
+
+
   post 'service_task/create'
   post 'material_task/create'
   post 'time_task/create'

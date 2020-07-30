@@ -76,6 +76,38 @@ class ProjectController < ApplicationController
     end
   end
 
+  def addcontrib
+
+    contrib_role = Role.find_by(role_type: params[:role_type])
+    contrib = User.find_by(username: params[:username])
+    p_id = params[:project_id].to_i
+    
+    if contrib && contrib_role
+      newProjectContrib = UserProject.create(user_id: contrib.id, project_id: p_id, role_id: contrib_role.id )
+      render json: newProjectContrib.user, status: :ok
+    else
+      render json: {error: true, message: "Could not invite user"}, status: 400
+    end
+
+  end
+
+  def getcontribs   
+    
+    requester = @current_user.id
+    projects_array = UserProject.where("project_id = ?", params[:project_id])
+    
+    if projects_array
+      contribs_array = projects_array.map do  |p| p.user end.filter do |user| user.id != requester end
+      render json: contribs_array, status: :ok
+    else
+      render json: {error: true, message: "Could not find contributors"}, status: 400
+    end
+
+  end
+
+
+
+
   private
   def project_params(*args)
     params.require(:project).permit(*args)
